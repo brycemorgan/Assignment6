@@ -1,15 +1,13 @@
 package assignment6;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TestTicketOffice {
+public class TestTicketOfficeTest {
 
-	public static int score = 0;
-
-	// @Test
-	public void basicServerTest() {
+	@Test
+	public void testBasicServerTest() {
 		try {
 			TicketServer.start(16789);
 		} catch (Exception e) {
@@ -20,7 +18,7 @@ public class TestTicketOffice {
 	}
 
 	@Test
-	public void testServerCachedHardInstance() {
+	public void testTestServerCachedHardInstance() {
 		try {
 			TicketServer.start(16790);
 		} catch (Exception e) {
@@ -34,7 +32,7 @@ public class TestTicketOffice {
 	}
 
 	@Test
-	public void twoNonConcurrentServerTest() {
+	public void testTwoNonConcurrentServerTest() {
 		try {
 			TicketServer.start(16791);
 		} catch (Exception e) {
@@ -49,7 +47,7 @@ public class TestTicketOffice {
 	}
 
 	@Test
-	public void twoConcurrentServerTest() {
+	public void testTwoConcurrentServerTest() {
 		try {
 			TicketServer.start(16792);
 		} catch (Exception e) {
@@ -83,6 +81,6 @@ public class TestTicketOffice {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
+
 }
