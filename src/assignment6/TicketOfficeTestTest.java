@@ -4,10 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TestTicketOfficeTest {
+public class TicketOfficeTestTest {
+
 
 	@Test
 	public void testBasicServerTest() {
+		System.out.println("new test");
 		try {
 			TicketServer.start(16789);
 		} catch (Exception e) {
@@ -19,6 +21,7 @@ public class TestTicketOfficeTest {
 
 	@Test
 	public void testTestServerCachedHardInstance() {
+		System.out.println("new test");
 		try {
 			TicketServer.start(16790);
 		} catch (Exception e) {
@@ -33,6 +36,7 @@ public class TestTicketOfficeTest {
 
 	@Test
 	public void testTwoNonConcurrentServerTest() {
+		System.out.println("new test");
 		try {
 			TicketServer.start(16791);
 		} catch (Exception e) {
@@ -48,6 +52,7 @@ public class TestTicketOfficeTest {
 
 	@Test
 	public void testTwoConcurrentServerTest() {
+		System.out.println("new test");
 		try {
 			TicketServer.start(16792);
 		} catch (Exception e) {
@@ -82,5 +87,4 @@ public class TestTicketOfficeTest {
 			e.printStackTrace();
 		}
 	}
-
 }
