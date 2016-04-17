@@ -17,8 +17,10 @@ public class TicketServer {
 	public static void start(int portNumber) throws IOException {
 		PORT = portNumber;
 		Runnable serverThread = new ThreadedTicketServer();
-		Thread t = new Thread(serverThread);
-		t.start();
+		Thread t1 = new Thread(serverThread);
+		Thread t2 = new Thread(serverThread);
+		t1.start();
+		t2.start();
 	}
 }
 
@@ -28,7 +30,7 @@ class ThreadedTicketServer implements Runnable {
 	String threadname = "X";
 	String testcase;
 	TicketClient sc;
-
+	
 	public void run() {
 		// TODO 422C
 		ServerSocket serverSocket;
@@ -37,12 +39,6 @@ class ThreadedTicketServer implements Runnable {
 			ArrayList<String> seating = setTheater();
 			int i = 0;
 			while (true) {
-/*				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
 class ThreadedTicketClient implements Runnable {
 	String hostname = "127.0.0.1";
@@ -23,9 +24,11 @@ class ThreadedTicketClient implements Runnable {
 			PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			Thread.sleep(100);
+//			Thread.sleep(100);
+			String result = in.readLine();
+//			if(result == null) System.exit(0);
 			System.out.println("*********Ticket*********");
-			System.out.println(threadname + " " + in.readLine());
+			System.out.println(threadname + " " + result);
 			System.out.println("************************\n");
 			echoSocket.close();
 		} catch (Exception e) {
@@ -55,7 +58,11 @@ public class TicketClient {
 	}
 
 	synchronized void requestTicket() {
-		tc.run();
+		Random rand = new Random();
+		int count = 0;
+		try{
+				tc.run();
+		} catch (Exception e){}
 //		System.out.println(hostName + "," + threadName + " got one ticket");
 	}
 
