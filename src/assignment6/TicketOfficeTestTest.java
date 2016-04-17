@@ -7,11 +7,13 @@ import org.junit.Test;
 public class TicketOfficeTestTest {
 
 
-	@Test
+	//@Test
 	public void testBasicServerTest() {
 		System.out.println("new test");
 		try {
 			TicketServer.start(16789);
+			//TicketServer.start(16900);
+
 		} catch (Exception e) {
 			fail();
 		}
@@ -19,11 +21,11 @@ public class TicketOfficeTestTest {
 		client.requestTicket();
 	}
 
-	@Test
+	//@Test
 	public void testTestServerCachedHardInstance() {
 		System.out.println("new test");
 		try {
-			TicketServer.start(16790);
+			TicketServer.start(16901);
 		} catch (Exception e) {
 			fail();
 		}
@@ -34,7 +36,7 @@ public class TicketOfficeTestTest {
 		
 	}
 
-	@Test
+	//@Test
 	public void testTwoNonConcurrentServerTest() {
 		System.out.println("new test");
 		try {
@@ -50,7 +52,7 @@ public class TicketOfficeTestTest {
 		c3.requestTicket();
 	}
 
-	@Test
+	//@Test
 	public void testTwoConcurrentServerTest() {
 		System.out.println("new test");
 		try {
@@ -79,12 +81,18 @@ public class TicketOfficeTestTest {
 		t1.start();
 		t2.start();
 		t3.start();
+		/*
 		try {
 			t1.join();
 			t2.join();
 			t3.join();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
+	}
+	
+	@Test
+	public void test1() {
+		TicketServer.setTheater2();
 	}
 }
