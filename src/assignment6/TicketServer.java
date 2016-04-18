@@ -11,6 +11,7 @@ import java.util.Collections;
 
 public class TicketServer {
 	int PORT = 2222;
+	static ArrayList<TheaterSeat> seating = new ArrayList<TheaterSeat>();
 	// EE422C: no matter how many concurrent requests you get,
 	// do not have more than three servers running concurrently
 	final static int MAXPARALLELTHREADS = 3;
@@ -22,7 +23,7 @@ public class TicketServer {
 		t.start();
 	}
 	
-	public static ArrayList<TheaterSeat> setTheater2() {
+	public static void setTheater2() {
 		ArrayList<TheaterSeat> seats = new ArrayList<TheaterSeat>();
 		for (int i = 101; i <= 128; i++) {
 			for (char c = 'C'; c <= 'X'; c++) {
@@ -58,15 +59,14 @@ public class TicketServer {
 
 		Collections.sort(seats);
 		
-		for (TheaterSeat seat: seats) {
+/*		for (TheaterSeat seat: seats) {
 			System.out.println(seat.toString());
-		}
-		
-		return seats;
+		}*/
+		seating = seats;
 	}
 	
-	public static TheaterSeat bestAvailable(ArrayList<TheaterSeat> theaterConfig) {
-		for (TheaterSeat seat: theaterConfig) {
+	public synchronized static TheaterSeat bestAvailable() {
+		for (TheaterSeat seat: seating) {
 			if (seat.isAvailable()) {
 				return seat;
 			}
@@ -74,8 +74,8 @@ public class TicketServer {
 		return null;
 	}
 	
-	public static void markSeatUnavailable(int arraylistindex, ArrayList<TheaterSeat> theaterConfig) {
-		theaterConfig.get(arraylistindex).setAvailable(false);
+	public static synchronized void markSeatUnavailable(int arraylistindex) {
+		seating.get(arraylistindex).setAvailable(false);
 	}
 }
 
@@ -98,7 +98,6 @@ class ThreadedTicketServer implements Runnable {
 		try {
 			System.out.println(port);
 			serverSocket = new ServerSocket(port);
-			ArrayList<String> seating = setTheater();
 			int i = 0;
 			while (true) {
 /*				try {
@@ -110,11 +109,14 @@ class ThreadedTicketServer implements Runnable {
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-				if (!seating.isEmpty()) {
+				TheaterSeat seat = TicketServer.bestAvailable();
+				TicketServer.markSeatUnavailable(seat.getSeatNumber());
+				out.println(seat.getRow() + " " + seat.getSeatNumber());
+/*				if (!seating.isEmpty()) {
 					out.println(seating.remove(i));
 				}
 				else System.out.println("Theater is sold out!");
-				clientSocket.close();
+				clientSocket.close();*/
 
 			}
 		} catch (IOException e) {
@@ -124,7 +126,7 @@ class ThreadedTicketServer implements Runnable {
 
 	}
 
-	public ArrayList<String> setTheater() {
+/*	public ArrayList<String> setTheater() {
 		ArrayList<String> seats = new ArrayList<String>();
 		for (int i = 108; i <= 121; i++)
 			seats.add("M,A" + i);
@@ -154,10 +156,8 @@ class ThreadedTicketServer implements Runnable {
 			seats.add("HL,AA" + i);
 		for (int i = 122; i <= 128; i++)
 			seats.add("HR,AA" + i);
-		return seats;
+		return seats;*/
 	}
 	
 	
 	
-	
-}

@@ -11,6 +11,7 @@ public class TicketOfficeTestTest {
 	public void testBasicServerTest() {
 		System.out.println("new test");
 		try {
+			TicketServer.setTheater2();
 			TicketServer ticketServer1 = new TicketServer();
 			ticketServer1.start(10000);
 			TicketServer ticketServer2 = new TicketServer();
