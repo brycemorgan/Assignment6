@@ -22,7 +22,7 @@ public class TicketServer {
 		Thread t = new Thread(serverThread);
 		t.start();
 	}
-	
+
 	public static void setTheater2() {
 		ArrayList<TheaterSeat> seats = new ArrayList<TheaterSeat>();
 		for (int i = 101; i <= 128; i++) {
@@ -35,19 +35,19 @@ public class TicketServer {
 				seats.add(new TheaterSeat(i, Character.toString(c)));
 			}
 		}
-		
+
 		for (int i = 101; i <= 107; i++) {
 			for (char c = 'Y'; c <= 'Z'; c++) {
 				seats.add(new TheaterSeat(i, Character.toString(c)));
 			}
 		}
-		
+
 		for (int i = 122; i <= 128; i++) {
 			for (char c = 'Y'; c <= 'Z'; c++) {
 				seats.add(new TheaterSeat(i, Character.toString(c)));
 			}
 		}
-		
+
 		for (int i = 101; i <= 104; i++) {
 			seats.add(new TheaterSeat(i, "AA"));
 		}
@@ -58,13 +58,14 @@ public class TicketServer {
 		seats.add(new TheaterSeat(128, "AA"));
 
 		Collections.sort(seats);
-		
-/*		for (TheaterSeat seat: seats) {
-			System.out.println(seat.toString());
-		}*/
+
+		/*
+		 * for (TheaterSeat seat: seats) { System.out.println(seat.toString());
+		 * }
+		 */
 		seating = seats;
 	}
-	
+
 	public synchronized static int bestAvailable() {
 		for (int i = 0; i < seating.size(); i++) {
 			if (seating.get(i).isAvailable()) {
@@ -73,8 +74,8 @@ public class TicketServer {
 		}
 		return -1;
 	}
-	
-	public static synchronized void markSeatUnavailable(int arraylistindex) {
+
+	public static void markSeatUnavailable(int arraylistindex) {
 		seating.get(arraylistindex).setAvailable(false);
 	}
 }
@@ -85,10 +86,10 @@ class ThreadedTicketServer implements Runnable {
 	String threadname = "X";
 	String testcase;
 	TicketClient sc;
-	
+
 	private int port;
-	
-	public ThreadedTicketServer (int port) {
+
+	public ThreadedTicketServer(int port) {
 		this.port = port;
 	}
 
@@ -100,23 +101,24 @@ class ThreadedTicketServer implements Runnable {
 			serverSocket = new ServerSocket(port);
 			int i = 0;
 			while (true) {
-/*				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
+				/*
+				 * try { Thread.sleep(100); } catch (InterruptedException e) {
+				 * // TODO Auto-generated catch block e.printStackTrace(); }
+				 */
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				int seatNo = TicketServer.bestAvailable();
-				TicketServer.markSeatUnavailable(seatNo);
-				out.println(TicketServer.seating.get(seatNo).toString());
-/*				if (!seating.isEmpty()) {
-					out.println(seating.remove(i));
+				if (seatNo != -1) {
+					TicketServer.markSeatUnavailable(seatNo);
+					out.println("Office " + port + " " + TicketServer.seating.get(seatNo).toString());
 				}
-				else System.out.println("Theater is sold out!");
-				clientSocket.close();*/
+				else out.println("Theater Sold Out!");
+				/*
+				 * if (!seating.isEmpty()) { out.println(seating.remove(i)); }
+				 * else System.out.println("Theater is sold out!");
+				 * clientSocket.close();
+				 */
 
 			}
 		} catch (IOException e) {
@@ -126,38 +128,19 @@ class ThreadedTicketServer implements Runnable {
 
 	}
 
-/*	public ArrayList<String> setTheater() {
-		ArrayList<String> seats = new ArrayList<String>();
-		for (int i = 108; i <= 121; i++)
-			seats.add("M,A" + i);
-		for (int i = 122; i <= 128; i++)
-			seats.add("HR,A" + i);
-		for (int i = 108; i <= 121; i++)
-			seats.add("M,B" + i);
-		for (int i = 122; i <= 128; i++)
-			seats.add("HR,B" + i);
-		for (char j = 'C'; j < 'Y'; j++) {
-			for (int i = 108; i <= 121; i++)
-				seats.add("M," + j + i);
-			for (int i = 101; i <= 107; i++)
-				seats.add("HL," + j + i);
-			for (int i = 122; i <= 128; i++)
-				seats.add("HR," + j + i);
-		}
-		for (int i = 101; i <= 107; i++)
-			seats.add("HL,Y" + i);
-		for (int i = 122; i <= 128; i++)
-			seats.add("HL,Y" + i);
-		for (int i = 101; i <= 107; i++)
-			seats.add("HR,Z" + i);
-		for (int i = 122; i <= 128; i++)
-			seats.add("HR,Z" + i);
-		for (int i = 101; i <= 107; i++)
-			seats.add("HL,AA" + i);
-		for (int i = 122; i <= 128; i++)
-			seats.add("HR,AA" + i);
-		return seats;*/
-	}
-	
-	
-	
+	/*
+	 * public ArrayList<String> setTheater() { ArrayList<String> seats = new
+	 * ArrayList<String>(); for (int i = 108; i <= 121; i++) seats.add("M,A" +
+	 * i); for (int i = 122; i <= 128; i++) seats.add("HR,A" + i); for (int i =
+	 * 108; i <= 121; i++) seats.add("M,B" + i); for (int i = 122; i <= 128;
+	 * i++) seats.add("HR,B" + i); for (char j = 'C'; j < 'Y'; j++) { for (int i
+	 * = 108; i <= 121; i++) seats.add("M," + j + i); for (int i = 101; i <=
+	 * 107; i++) seats.add("HL," + j + i); for (int i = 122; i <= 128; i++)
+	 * seats.add("HR," + j + i); } for (int i = 101; i <= 107; i++)
+	 * seats.add("HL,Y" + i); for (int i = 122; i <= 128; i++) seats.add("HL,Y"
+	 * + i); for (int i = 101; i <= 107; i++) seats.add("HR,Z" + i); for (int i
+	 * = 122; i <= 128; i++) seats.add("HR,Z" + i); for (int i = 101; i <= 107;
+	 * i++) seats.add("HL,AA" + i); for (int i = 122; i <= 128; i++)
+	 * seats.add("HR,AA" + i); return seats;
+	 */
+}

@@ -6,8 +6,7 @@ import org.junit.Test;
 
 public class TicketOfficeTestTest {
 
-
-	@Test
+	//@Test
 	public void testBasicServerTest() {
 		System.out.println("new test");
 		try {
@@ -20,32 +19,32 @@ public class TicketOfficeTestTest {
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient client1 = new TicketClient("localhost", "c1",10000);
+		TicketClient client1 = new TicketClient("localhost", "c1", 10000);
 		TicketClient client2 = new TicketClient("localhost", "c2", 10001);
 		client1.requestTicket();
 		client2.requestTicket();
 	}
 
-	//@Test
+	// @Test
 	public void testTestServerCachedHardInstance() {
 		System.out.println("new test");
 		try {
-			//TicketServer.start(16901);
+			// TicketServer.start(16901);
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient client1 = new TicketClient("localhost", "c1",10000);
+		TicketClient client1 = new TicketClient("localhost", "c1", 10000);
 		TicketClient client2 = new TicketClient("localhost", "c2", 10001);
 		client1.requestTicket();
 		client2.requestTicket();
-		
+
 	}
 
-	//@Test
+	// @Test
 	public void testTwoNonConcurrentServerTest() {
 		System.out.println("new test");
 		try {
-			//TicketServer.start(16791);
+			// TicketServer.start(16791);
 		} catch (Exception e) {
 			fail();
 		}
@@ -57,18 +56,24 @@ public class TicketOfficeTestTest {
 		c3.requestTicket();
 	}
 
-	//@Test
+	@Test
 	public void testTwoConcurrentServerTest() {
 		System.out.println("new test");
 		try {
-			//TicketServer.start(16792);
-			//TicketServer.start(16777);
+			TicketServer.setTheater2();
+			TicketServer ticketServer1 = new TicketServer();
+			ticketServer1.start(10000);
+			TicketServer ticketServer2 = new TicketServer();
+			ticketServer2.start(10001);
+			TicketServer ticketServer3 = new TicketServer();
+			ticketServer2.start(10002);
+			// TicketServer.start(16777);
 		} catch (Exception e) {
 			fail();
 		}
-		final TicketClient c1 = new TicketClient("conc1");
-		final TicketClient c2 = new TicketClient("conc2");
-		final TicketClient c3 = new TicketClient("conc3");
+		TicketClient c1 = new TicketClient("localhost", "c1", 10000);
+		TicketClient c2 = new TicketClient("localhost", "c2", 10001);
+		TicketClient c3 = new TicketClient("localhost", "c2", 10002);
 		Thread t1 = new Thread() {
 			public void run() {
 				c1.requestTicket();
@@ -87,17 +92,17 @@ public class TicketOfficeTestTest {
 		t1.start();
 		t2.start();
 		t3.start();
-		
-		/*try {
+
+		try {
 			t1.join();
 			t2.join();
 			t3.join();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
-	
-	//@Test
+
+	// @Test
 	public void test1() {
 		TicketServer.setTheater2();
 	}

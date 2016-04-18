@@ -11,6 +11,7 @@ class ThreadedTicketClient implements Runnable {
 	String threadname = "X";
 	TicketClient sc;
 	int port;
+	static boolean full = false;
 
 	public ThreadedTicketClient(TicketClient sc, String hostname, String threadname, int port) {
 		this.sc = sc;
@@ -26,12 +27,11 @@ class ThreadedTicketClient implements Runnable {
 			PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-//			Thread.sleep(100);
-			String result = in.readLine();
-//			if(result == null) System.exit(0);
-			System.out.println("*********Ticket*********");
-			System.out.println(threadname + " " + result);
-			System.out.println("************************\n");
+			Thread.sleep(100);
+			if(TicketServer.bestAvailable() != -1)
+			System.out.println("*************Ticket*************\n" + in.readLine() + "\n********************************\n");
+/*			System.out.println(in.readLine());
+			System.out.println("********************************\n");*/
 			echoSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,7 +63,14 @@ public class TicketClient {
 		Random rand = new Random();
 		int count = 0;
 		try{
+			while(TicketServer.bestAvailable() != -1) tc.run();
+			System.out.println("Theater Sold Out!");
+/*				tc.run();
 				tc.run();
+				tc.run();
+				tc.run();
+				tc.run();
+				tc.run();*/
 		} catch (Exception e){}
 //		System.out.println(hostName + "," + threadName + " got one ticket");
 	}
