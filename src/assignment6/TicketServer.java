@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TicketServer {
-	static int PORT = 2222;
+	int PORT = 2222;
 	// EE422C: no matter how many concurrent requests you get,
 	// do not have more than three servers running concurrently
 	final static int MAXPARALLELTHREADS = 3;
 
-	public static void start(int portNumber) throws IOException {
+	public void start(int portNumber) throws IOException {
 		PORT = portNumber;
-		Runnable serverThread = new ThreadedTicketServer();
+		Runnable serverThread = new ThreadedTicketServer(PORT);
 		Thread t = new Thread(serverThread);
 		t.start();
 	}
@@ -85,12 +85,19 @@ class ThreadedTicketServer implements Runnable {
 	String threadname = "X";
 	String testcase;
 	TicketClient sc;
+	
+	private int port;
+	
+	public ThreadedTicketServer (int port) {
+		this.port = port;
+	}
 
 	public void run() {
 		// TODO 422C
 		ServerSocket serverSocket;
 		try {
-			serverSocket = new ServerSocket(TicketServer.PORT);
+			System.out.println(port);
+			serverSocket = new ServerSocket(port);
 			ArrayList<String> seating = setTheater();
 			int i = 0;
 			while (true) {

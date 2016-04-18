@@ -7,30 +7,34 @@ import org.junit.Test;
 public class TicketOfficeTestTest {
 
 
-	//@Test
+	@Test
 	public void testBasicServerTest() {
 		System.out.println("new test");
 		try {
-			TicketServer.start(16789);
-			//TicketServer.start(16900);
+			TicketServer ticketServer1 = new TicketServer();
+			ticketServer1.start(10000);
+			TicketServer ticketServer2 = new TicketServer();
+			ticketServer2.start(10001);
 
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient client = new TicketClient();
-		client.requestTicket();
+		TicketClient client1 = new TicketClient("localhost", "c1",10000);
+		TicketClient client2 = new TicketClient("localhost", "c2", 10001);
+		client1.requestTicket();
+		client2.requestTicket();
 	}
 
 	//@Test
 	public void testTestServerCachedHardInstance() {
 		System.out.println("new test");
 		try {
-			TicketServer.start(16901);
+			//TicketServer.start(16901);
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient client1 = new TicketClient("localhost", "c1");
-		TicketClient client2 = new TicketClient("localhost", "c2");
+		TicketClient client1 = new TicketClient("localhost", "c1",10000);
+		TicketClient client2 = new TicketClient("localhost", "c2", 10001);
 		client1.requestTicket();
 		client2.requestTicket();
 		
@@ -40,7 +44,7 @@ public class TicketOfficeTestTest {
 	public void testTwoNonConcurrentServerTest() {
 		System.out.println("new test");
 		try {
-			TicketServer.start(16791);
+			//TicketServer.start(16791);
 		} catch (Exception e) {
 			fail();
 		}
@@ -56,7 +60,8 @@ public class TicketOfficeTestTest {
 	public void testTwoConcurrentServerTest() {
 		System.out.println("new test");
 		try {
-			TicketServer.start(16792);
+			//TicketServer.start(16792);
+			//TicketServer.start(16777);
 		} catch (Exception e) {
 			fail();
 		}
@@ -81,8 +86,8 @@ public class TicketOfficeTestTest {
 		t1.start();
 		t2.start();
 		t3.start();
-		/*
-		try {
+		
+		/*try {
 			t1.join();
 			t2.join();
 			t3.join();
@@ -91,7 +96,7 @@ public class TicketOfficeTestTest {
 		}*/
 	}
 	
-	@Test
+	//@Test
 	public void test1() {
 		TicketServer.setTheater2();
 	}
