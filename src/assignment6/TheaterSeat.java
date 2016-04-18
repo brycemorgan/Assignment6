@@ -58,15 +58,15 @@ public class TheaterSeat extends Object implements Comparable {
 	@Override
 	public String toString() {
 		if (seatNumber < 108) {
-			return row + Integer.toString(seatNumber) + " House Right";
+			return "Seat " + row + Integer.toString(seatNumber) + ", House Right";
 		}
 		
 		if (seatNumber > 121) {
-			return row + Integer.toString(seatNumber) + " House Left";
+			return "Seat " + row + Integer.toString(seatNumber) + ", House Left";
 		}
 		
 		else {
-			return row + Integer.toString(seatNumber) + " House Middle";
+			return "Seat " + row + Integer.toString(seatNumber) + ", House Middle";
 		}
 	}
 }

@@ -55,25 +55,24 @@ public class TicketOfficeTestTest {
 		c2.requestTicket();
 		c3.requestTicket();
 	}
-
+//MAIN TEST
 	@Test
 	public void testTwoConcurrentServerTest() {
-		System.out.println("new test");
 		try {
 			TicketServer.setTheater2();
 			TicketServer ticketServer1 = new TicketServer();
-			ticketServer1.start(10000);
+			ticketServer1.start(1);
 			TicketServer ticketServer2 = new TicketServer();
-			ticketServer2.start(10001);
+			ticketServer2.start(2);
 			TicketServer ticketServer3 = new TicketServer();
-			ticketServer2.start(10002);
+			ticketServer2.start(3);
 			// TicketServer.start(16777);
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient c1 = new TicketClient("localhost", "c1", 10000);
-		TicketClient c2 = new TicketClient("localhost", "c2", 10001);
-		TicketClient c3 = new TicketClient("localhost", "c2", 10002);
+		TicketClient c1 = new TicketClient("localhost", "c1", 1);
+		TicketClient c2 = new TicketClient("localhost", "c2", 2);
+		TicketClient c3 = new TicketClient("localhost", "c2", 3);
 		Thread t1 = new Thread() {
 			public void run() {
 				c1.requestTicket();
