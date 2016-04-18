@@ -65,13 +65,13 @@ public class TicketServer {
 		seating = seats;
 	}
 	
-	public synchronized static TheaterSeat bestAvailable() {
-		for (TheaterSeat seat: seating) {
-			if (seat.isAvailable()) {
-				return seat;
+	public synchronized static int bestAvailable() {
+		for (int i = 0; i < seating.size(); i++) {
+			if (seating.get(i).isAvailable()) {
+				return i;
 			}
 		}
-		return null;
+		return -1;
 	}
 	
 	public static synchronized void markSeatUnavailable(int arraylistindex) {
@@ -109,9 +109,9 @@ class ThreadedTicketServer implements Runnable {
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-				TheaterSeat seat = TicketServer.bestAvailable();
-				TicketServer.markSeatUnavailable(seat.getSeatNumber());
-				out.println(seat.getRow() + " " + seat.getSeatNumber());
+				int seatNo = TicketServer.bestAvailable();
+				TicketServer.markSeatUnavailable(seatNo);
+				out.println(TicketServer.seating.get(seatNo).toString());
 /*				if (!seating.isEmpty()) {
 					out.println(seating.remove(i));
 				}

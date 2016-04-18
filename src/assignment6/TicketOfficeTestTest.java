@@ -13,8 +13,8 @@ public class TicketOfficeTestTest {
 		try {
 			TicketServer.setTheater2();
 			TicketServer ticketServer1 = new TicketServer();
-			ticketServer1.start(10000);
 			TicketServer ticketServer2 = new TicketServer();
+			ticketServer1.start(10000);
 			ticketServer2.start(10001);
 
 		} catch (Exception e) {
