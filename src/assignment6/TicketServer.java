@@ -80,9 +80,8 @@ class ThreadedTicketServer implements Runnable {
 	public void run() {
 		ServerSocket serverSocket;
 		try {
-//			System.out.println(port);
 			serverSocket = new ServerSocket(port);
-			int i = 0;
+
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -91,9 +90,11 @@ class ThreadedTicketServer implements Runnable {
 				if (seatNo != -1) {
 					TicketServer.markSeatUnavailable(seatNo);
 					out.println("Box Office " + port + " " + TicketServer.seating.get(seatNo).toString());
-				} else
-					out.println("Box Office " + port + "Theater Sold Out!");
+				} else {
+					out.println("Box Office " + port + " Theater Sold Out!");
+				}
 			}
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

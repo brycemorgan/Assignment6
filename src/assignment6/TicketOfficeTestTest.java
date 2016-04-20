@@ -70,14 +70,14 @@ public class TicketOfficeTestTest {
 			TicketServer ticketServer2 = new TicketServer();
 			ticketServer2.start(2);
 			TicketServer ticketServer3 = new TicketServer();
-			ticketServer2.start(3);
+			ticketServer3.start(3);
 			// TicketServer.start(16777);
 		} catch (Exception e) {
 			fail();
 		}
-		TicketClient c1 = new TicketClient("localhost", "c1", 1);
-		TicketClient c2 = new TicketClient("localhost", "c2", 2);
-		TicketClient c3 = new TicketClient("localhost", "c2", 3);
+		final TicketClient c1 = new TicketClient("localhost", "c1", 1);
+		final TicketClient c2 = new TicketClient("localhost", "c2", 2);
+		final TicketClient c3 = new TicketClient("localhost", "c2", 3);
 		Thread t1 = new Thread() {
 			public void run() {
 				c1.requestTicket();

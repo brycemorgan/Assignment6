@@ -30,10 +30,10 @@ class ThreadedTicketClient implements Runnable {
 		try {
 			Socket echoSocket = new Socket(hostname, port);
 			BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-//			Thread.sleep(100);
-			if (TicketServer.bestAvailable() != -1)
-				System.out.println(
-						"***************Ticket***************\n" + in.readLine() + "\n**************Reserved**************\n");
+
+			if (TicketServer.bestAvailable() != -1) {
+				System.out.println("***************Ticket***************\n" + in.readLine() + "\n**************Reserved**************\n");
+			}
 			echoSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +72,6 @@ public class TicketClient {
 					tc.run();
 				}
 			}
-			System.out.println("Theater Sold Out!");
 		} catch (Exception e) {
 		}
 	}
