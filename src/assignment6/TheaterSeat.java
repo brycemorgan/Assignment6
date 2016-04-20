@@ -1,3 +1,8 @@
+/* Bryce Morgan, George Tang
+ * bcm2355, gdt382 
+ * EE422C- Assignment 6
+ */
+
 package assignment6;
 
 public class TheaterSeat extends Object implements Comparable {

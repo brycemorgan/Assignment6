@@ -1,3 +1,8 @@
+/* Bryce Morgan, George Tang
+ * bcm2355, gdt382 
+ * EE422C- Assignment 6
+ */
+
 package assignment6;
 
 import java.io.BufferedReader;
@@ -25,7 +30,7 @@ class ThreadedTicketClient implements Runnable {
 		try {
 			Socket echoSocket = new Socket(hostname, port);
 			BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-			Thread.sleep(100);
+//			Thread.sleep(100);
 			if (TicketServer.bestAvailable() != -1)
 				System.out.println(
 						"***************Ticket***************\n" + in.readLine() + "\n**************Reserved**************\n");

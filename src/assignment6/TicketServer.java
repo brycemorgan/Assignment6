@@ -1,3 +1,8 @@
+/* Bryce Morgan, George Tang
+ * bcm2355, gdt382 
+ * EE422C- Assignment 6
+ */
+
 package assignment6;
 
 import java.io.BufferedReader;
@@ -87,7 +92,7 @@ class ThreadedTicketServer implements Runnable {
 					TicketServer.markSeatUnavailable(seatNo);
 					out.println("Box Office " + port + " " + TicketServer.seating.get(seatNo).toString());
 				} else
-					out.println("Theater Sold Out!");
+					out.println("Box Office " + port + "Theater Sold Out!");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
